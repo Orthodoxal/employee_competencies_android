@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -69,6 +70,9 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2"
 
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -88,6 +92,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 
     implementation "androidx.navigation:navigation-compose:2.7.5"
+
+    implementation "androidx.security:security-crypto-ktx:1.1.0-alpha06"
 }
 
 kapt {

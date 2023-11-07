@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import `is`.ulstu.myapplication.authorization.presentation.AUTH_NAV_ROUTE
 import `is`.ulstu.myapplication.ui.navigation.NavigationIntent
 import `is`.ulstu.myapplication.ui.navigation.Navigator
 import `is`.ulstu.myapplication.ui.theme.EmployeeCompetenciesAndroidTheme
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
             EmployeeCompetenciesAndroidTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    NavHost(navController = navController, startDestination = "authorization") { mainNavGraphBuilder() }
+                    NavHost(navController = navController, startDestination = AUTH_NAV_ROUTE) { mainNavGraphBuilder() }
                 }
             }
         }
