@@ -1,6 +1,6 @@
 package `is`.ulstu.myapplication.base.api
 
-open class AppException(message: String, cause: Throwable? = null) : Exception(message, cause)
+open class AppException(override val message: String, cause: Throwable? = null) : Exception(message, cause)
 
 class ConnectionException(cause: Throwable) : AppException(message = "Ошибка соединения с сервером", cause = cause)
 
