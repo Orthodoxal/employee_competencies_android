@@ -3,6 +3,10 @@ package `is`.ulstu.myapplication.base.api
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonEncodingException
 import com.squareup.moshi.Moshi
+import `is`.ulstu.myapplication.base.AppException
+import `is`.ulstu.myapplication.base.BackendException
+import `is`.ulstu.myapplication.base.ConnectionException
+import `is`.ulstu.myapplication.base.ParseBackendResponseException
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import java.io.IOException

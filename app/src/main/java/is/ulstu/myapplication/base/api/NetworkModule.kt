@@ -5,6 +5,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import `is`.ulstu.myapplication.data.user.sources.cache.UserInfoCache
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,8 +23,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        userInfoCache: UserInfoCache,
+    ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(createAuthorizationInterceptor(userInfoCache))
             .addInterceptor(loggingInterceptor)
             .build()
     }
@@ -40,5 +46,16 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideLoggingInterceptor() = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    private fun createAuthorizationInterceptor(userInfoCache: UserInfoCache): Interceptor {
+        return Interceptor { chain ->
+            val newBuilder = chain.request().newBuilder()
+            val token = userInfoCache.getUserToken()
+            if (token != null) {
+                newBuilder.addHeader("Authorization", token)
+            }
+            return@Interceptor chain.proceed(newBuilder.build())
+        }
+    }
 
 }
