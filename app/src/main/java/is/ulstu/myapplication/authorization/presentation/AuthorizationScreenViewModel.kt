@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import `is`.ulstu.myapplication.authorization.domain.use_cases.SignInUseCase
-import `is`.ulstu.myapplication.base.api.AppException
+import `is`.ulstu.myapplication.base.AppException
 import `is`.ulstu.myapplication.ui.navigation.NavigationIntent
 import `is`.ulstu.myapplication.ui.navigation.Navigator
+import `is`.ulstu.myapplication.ui.navigation.TABS_ROUTE
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -33,25 +35,22 @@ class AuthorizationScreenViewModel @Inject constructor(
     }
 
     init {
-        viewModelScope.launch(handler) {
-            launch(Dispatchers.IO) {
-                _state.update { it.copy(enterButtonState = EnterButtonState.Loading) }
-                signInUseCase.signInByToken()
-                _state.update { it.copy(enterButtonState = EnterButtonState.None) }
-                //navigator.navigateTo(NavigationIntent.NavigationTo(route = "smth", inclusive = true))
-            }
+        viewModelScope.launch(Dispatchers.IO + handler) {
+            _state.update { it.copy(enterButtonState = EnterButtonState.Loading) }
+            signInUseCase.signInByToken()
+            _state.update { it.copy(enterButtonState = EnterButtonState.None) }
+            delay(500L)
+            navigator.navigateTo(NavigationIntent.NavigationTo(route = TABS_ROUTE, inclusive = true))
         }
     }
 
     fun singIn() {
         val (login, password) = state.value
-        viewModelScope.launch(handler) {
-            launch(Dispatchers.IO) {
-                _state.update { it.copy(enterButtonState = EnterButtonState.Loading) }
-                signInUseCase.signIn(login, password)
-                _state.update { it.copy(enterButtonState = EnterButtonState.None) }
-                //navigator.navigateTo(NavigationIntent.NavigationTo(route = "smth", inclusive = true))
-            }
+        viewModelScope.launch(Dispatchers.IO + handler) {
+            _state.update { it.copy(enterButtonState = EnterButtonState.Loading) }
+            signInUseCase.signIn(login, password)
+            _state.update { it.copy(enterButtonState = EnterButtonState.None) }
+            navigator.navigateTo(NavigationIntent.NavigationTo(route = TABS_ROUTE, inclusive = true))
         }
     }
 

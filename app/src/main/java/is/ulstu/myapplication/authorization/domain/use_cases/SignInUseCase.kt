@@ -1,7 +1,7 @@
 package `is`.ulstu.myapplication.authorization.domain.use_cases
 
 import `is`.ulstu.myapplication.authorization.domain.AuthorizationRepository
-import `is`.ulstu.myapplication.base.api.BusinessLogicException
+import `is`.ulstu.myapplication.base.BusinessLogicException
 import javax.inject.Inject
 import javax.inject.Singleton
 

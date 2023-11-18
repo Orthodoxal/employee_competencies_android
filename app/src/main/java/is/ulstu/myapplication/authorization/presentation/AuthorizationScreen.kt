@@ -12,6 +12,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,11 +29,11 @@ import `is`.ulstu.myapplication.ui.theme.Purple40
 @Composable
 @Preview
 internal fun AuthorizationScreen(model: AuthorizationScreenViewModel = hiltViewModel()) {
-    val state = model.state.collectAsState()
+    val state by model.state.collectAsState()
 
     val context = LocalContext.current
-    LaunchedEffect(key1 = state.value.error) {
-        (state.value.error as? AuthorizationError.Error)?.message?.let {
+    LaunchedEffect(key1 = state.error) {
+        (state.error as? AuthorizationError.Error)?.message?.let {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
     }
@@ -47,7 +48,7 @@ internal fun AuthorizationScreen(model: AuthorizationScreenViewModel = hiltViewM
         val remOnLoginChanged = remember { model::onLoginChanged }
         TextField(
             modifier = Modifier.padding(12.dp),
-            value = state.value.login,
+            value = state.login,
             onValueChange = remOnLoginChanged,
             placeholder = { Text(text = "Логин") },
         )
@@ -56,7 +57,7 @@ internal fun AuthorizationScreen(model: AuthorizationScreenViewModel = hiltViewM
         val remVisualTransformation = remember { PasswordVisualTransformation() }
         TextField(
             modifier = Modifier.padding(12.dp),
-            value = state.value.password,
+            value = state.password,
             onValueChange = remOnPasswordChanged,
             placeholder = { Text(text = "Пароль") },
             visualTransformation = remVisualTransformation,

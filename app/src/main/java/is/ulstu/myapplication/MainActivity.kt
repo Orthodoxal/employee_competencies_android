@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import `is`.ulstu.myapplication.authorization.presentation.AUTH_NAV_ROUTE
 import `is`.ulstu.myapplication.ui.navigation.NavigationIntent
 import `is`.ulstu.myapplication.ui.navigation.Navigator
+import `is`.ulstu.myapplication.ui.navigation.mainNavGraphBuilder
 import `is`.ulstu.myapplication.ui.theme.EmployeeCompetenciesAndroidTheme
 import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
