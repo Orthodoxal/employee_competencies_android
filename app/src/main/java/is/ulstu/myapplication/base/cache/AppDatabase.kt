@@ -14,7 +14,13 @@ import `is`.ulstu.myapplication.data.employees.sources.cache.entities.EmployeeEn
         EmployeeEntity::class
     ]
 )
-@TypeConverters(StringListConverter::class, EmployeeRateConverter::class, RatedValueConverter::class)
+@TypeConverters(
+    StringListConverter::class,
+    EmployeeRateConverter::class,
+    RatedValueConverter::class,
+    BigDecimalDoubleTypeConverter::class,
+    LocalDateConverter::class,
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun employeesDao(): EmployeesDao

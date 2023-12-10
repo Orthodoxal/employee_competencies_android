@@ -1,84 +1,43 @@
-package `is`.ulstu.myapplication.features.employees.presentation
+package `is`.ulstu.myapplication.features.filter.presentation
 
-import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import `is`.ulstu.myapplication.R
 import `is`.ulstu.myapplication.features.employees.domain.models.EmployeeModel
 import `is`.ulstu.myapplication.ui.theme.Typography
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 @Preview
-internal fun EmployeesScreen(model: EmployeesViewModel = hiltViewModel()) {
+internal fun EmployeesScreen(model: FilterViewModel = hiltViewModel()) {
     val state by model.state.collectAsState()
 
-    val context = LocalContext.current
-    LaunchedEffect(key1 = state.error) {
-        (state.error as? EmployeesError.Error)?.message?.let {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .weight(1f),
-                value = state.searchText,
-                onValueChange = model::onSearchTextChange,
-                placeholder = {
-                    Text(
-                        text = "Введите ФИО соотрудника",
-                        style = Typography.titleMedium,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                },
-                singleLine = true,
-            )
-
-            IconButton(
-                modifier = Modifier.padding(end = 16.dp),
-                onClick = model::onRefreshClick
-            ) {
-                Image(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_refresh),
-                    contentDescription = null,
-                )
-            }
-        }
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
 
         val onEmployeeItemClick: (employeeId: Long?) -> Unit = remember {
             { model.onEmployeeItemClick(employeeId = it) }
@@ -86,15 +45,38 @@ internal fun EmployeesScreen(model: EmployeesViewModel = hiltViewModel()) {
 
         LazyColumn(
             modifier = Modifier
-                .padding(vertical = 12.dp)
-                .fillMaxSize()
+                .align(Alignment.TopCenter),
+            contentPadding = PaddingValues(bottom = 60.dp),
         ) {
-            items(state.catalog) { employee ->
+            item {
+                Text(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp),
+                    text = "Расширенный поиск сотрудников",
+                    style = Typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center,
+                )
+            }
+
+            items(state.filteredCatalog) { employee ->
                 EmployeeItem(
                     employee = employee,
                     onClick = onEmployeeItemClick,
                 )
             }
+        }
+
+        val remOnClick: () -> Unit = remember {
+            {}
+        }
+
+        Button(
+            modifier = Modifier
+                .padding(20.dp)
+                .align(Alignment.BottomCenter),
+            onClick = remOnClick,
+        ) {
+            Text("Искать")
         }
     }
 }
