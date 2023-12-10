@@ -5,8 +5,8 @@ import `is`.ulstu.myapplication.data.user.sources.api.entities.AuthUserByTokenRe
 import `is`.ulstu.myapplication.data.user.sources.api.entities.AuthUserRequestEntity
 import `is`.ulstu.myapplication.data.user.sources.api.entities.RemoveActiveUserRequestEntity
 import `is`.ulstu.myapplication.data.user.sources.cache.UserInfoCache
-import `is`.ulstu.myapplication.authorization.domain.AuthorizationRepository
-import `is`.ulstu.myapplication.authorization.domain.models.UserInfoModel
+import `is`.ulstu.myapplication.features.authorization.domain.AuthorizationRepository
+import `is`.ulstu.myapplication.features.authorization.domain.models.UserInfoModel
 import `is`.ulstu.myapplication.base.api.ResponseStatus
 import javax.inject.Inject
 import javax.inject.Singleton

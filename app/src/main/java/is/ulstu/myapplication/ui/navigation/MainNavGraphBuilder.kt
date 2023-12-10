@@ -23,9 +23,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import `is`.ulstu.myapplication.R
-import `is`.ulstu.myapplication.authorization.presentation.authorizationNavGraphBuilder
-import `is`.ulstu.myapplication.employees.presentation.EMPLOYEES_NAV_ROUTE
-import `is`.ulstu.myapplication.employees.presentation.employeesNavGraphBuilder
+import `is`.ulstu.myapplication.features.authorization.presentation.authorizationNavGraphBuilder
+import `is`.ulstu.myapplication.features.employee_info.presentation.employeeInfoNavGraphBuilder
+import `is`.ulstu.myapplication.features.employees.presentation.EMPLOYEES_NAV_ROUTE
+import `is`.ulstu.myapplication.features.employees.presentation.employeesNavGraphBuilder
 import `is`.ulstu.myapplication.ui.theme.White
 
 internal const val TABS_ROUTE = "tabs"
@@ -33,6 +34,7 @@ internal const val TABS_ROUTE = "tabs"
 fun NavGraphBuilder.mainNavGraphBuilder() {
     authorizationNavGraphBuilder()
     composable(route = TABS_ROUTE) { TabsScreen() }
+    employeeInfoNavGraphBuilder()
 }
 
 private fun NavGraphBuilder.tabsNavGraphBuilder() {

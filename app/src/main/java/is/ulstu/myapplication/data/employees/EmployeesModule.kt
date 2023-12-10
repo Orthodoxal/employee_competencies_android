@@ -8,7 +8,8 @@ import dagger.hilt.components.SingletonComponent
 import `is`.ulstu.myapplication.base.cache.AppDatabase
 import `is`.ulstu.myapplication.data.employees.sources.api.EmployeesSource
 import `is`.ulstu.myapplication.data.employees.sources.api.RetrofitEmployeesSource
-import `is`.ulstu.myapplication.employees.domain.EmployeesRepository
+import `is`.ulstu.myapplication.features.employee_info.domain.EmployeeInfoRepository
+import `is`.ulstu.myapplication.features.employees.domain.EmployeesRepository
 import javax.inject.Singleton
 
 @Module
@@ -20,6 +21,9 @@ abstract class EmployeesModule {
 
     @Binds
     abstract fun bindEmployeesRepository(employeesRepositoryImpl: EmployeesRepositoryImpl): EmployeesRepository
+
+    @Binds
+    abstract fun bindEmployeeInfoRepository(employeesRepositoryImpl: EmployeesRepositoryImpl): EmployeeInfoRepository
 
     companion object {
 
