@@ -27,6 +27,8 @@ import `is`.ulstu.myapplication.features.authorization.presentation.authorizatio
 import `is`.ulstu.myapplication.features.employee_info.presentation.employeeInfoNavGraphBuilder
 import `is`.ulstu.myapplication.features.employees.presentation.EMPLOYEES_NAV_ROUTE
 import `is`.ulstu.myapplication.features.employees.presentation.employeesNavGraphBuilder
+import `is`.ulstu.myapplication.features.filter.presentation.FILTER_NAV_ROUTE
+import `is`.ulstu.myapplication.features.filter.presentation.filterNavGraphBuilder
 import `is`.ulstu.myapplication.features.profile.presentation.PROFILE_NAV_ROUTE
 import `is`.ulstu.myapplication.features.profile.presentation.profileNavGraphBuilder
 import `is`.ulstu.myapplication.ui.theme.White
@@ -42,11 +44,12 @@ fun NavGraphBuilder.mainNavGraphBuilder() {
 private fun NavGraphBuilder.tabsNavGraphBuilder() {
     employeesNavGraphBuilder()
     profileNavGraphBuilder()
+    filterNavGraphBuilder()
 }
 
 private val tabsItems = listOf(
     TabsItem(iconRes = R.drawable.ic_employees_catalog, route = EMPLOYEES_NAV_ROUTE, name = "Сотрудники"),
-    TabsItem(iconRes = R.drawable.ic_filter, route = "", name = "Фильтр"),
+    TabsItem(iconRes = R.drawable.ic_filter, route = FILTER_NAV_ROUTE, name = "Фильтр"),
     TabsItem(iconRes = R.drawable.ic_profile, route = PROFILE_NAV_ROUTE, name = "Профиль"),
 )
 

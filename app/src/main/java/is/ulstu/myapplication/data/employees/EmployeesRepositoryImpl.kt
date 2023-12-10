@@ -5,6 +5,8 @@ import `is`.ulstu.myapplication.data.employees.sources.cache.EmployeesDao
 import `is`.ulstu.myapplication.features.employee_info.domain.EmployeeInfoRepository
 import `is`.ulstu.myapplication.features.employees.domain.EmployeesRepository
 import `is`.ulstu.myapplication.features.employees.domain.models.EmployeeModel
+import `is`.ulstu.myapplication.features.filter.domain.FilterRepository
+import `is`.ulstu.myapplication.features.filter.domain.models.FilterAction
 import javax.inject.Inject
 import javax.inject.Singleton
 
