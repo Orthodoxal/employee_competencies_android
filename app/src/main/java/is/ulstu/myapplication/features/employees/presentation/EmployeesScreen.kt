@@ -123,7 +123,7 @@ private fun EmployeeItem(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Bottom,
     ) {
-        BirthDate(birthDate = employee.birthDate)
+        BirthDate(birthDate = employee.birthDate.toString())
 
         City(city = employee.city)
     }

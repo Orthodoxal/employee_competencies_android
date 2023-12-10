@@ -99,8 +99,8 @@ private fun EmployeeMainInfo(
     Name(name = "В компании: ")
     TextEmployeeField(text = "Подразделени: ${employee.department}")
     TextEmployeeField(text = "Должность: ${employee.position}")
-    TextEmployeeField(text = "Стаж в компании: ${employee.seniority}")
-    TextEmployeeField(text = "Заработная плата: ${employee.salary}")
+    TextEmployeeField(text = "Стаж в компании: ${employee.seniority} дней")
+    TextEmployeeField(text = "Заработная плата: ${employee.salary} ₽")
 }
 
 @Composable
