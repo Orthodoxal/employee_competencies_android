@@ -1,4 +1,4 @@
-package `is`.ulstu.myapplication.features.authorization.domain.use_cases
+package `is`.ulstu.myapplication.features.profile.domain.use_cases
 
 import `is`.ulstu.myapplication.features.authorization.domain.AuthorizationRepository
 import `is`.ulstu.myapplication.base.BusinessLogicException

@@ -1,10 +1,12 @@
-package `is`.ulstu.myapplication.features.authorization.presentation
+package `is`.ulstu.myapplication.features.profile.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import `is`.ulstu.myapplication.base.AppException
-import `is`.ulstu.myapplication.features.authorization.domain.use_cases.SignInUseCase
+import `is`.ulstu.myapplication.features.authorization.presentation.AUTH_NAV_ROUTE
+import `is`.ulstu.myapplication.features.profile.domain.use_cases.LoadUserInfoUseCase
+import `is`.ulstu.myapplication.features.profile.domain.use_cases.SignOutUseCase
 import `is`.ulstu.myapplication.ui.navigation.NavigationIntent
 import `is`.ulstu.myapplication.ui.navigation.Navigator
 import `is`.ulstu.myapplication.ui.navigation.TABS_ROUTE
@@ -18,8 +20,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthorizationScreenViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase,
+class ProfileScreenViewModel @Inject constructor(
+    private val signOutUseCase: SignOutUseCase,
+    private val loadUserInfoUseCase: LoadUserInfoUseCase,
     private val navigator: Navigator,
 ) : ViewModel() {
 
@@ -31,42 +34,32 @@ class AuthorizationScreenViewModel @Inject constructor(
             is AppException -> throwable.message
             else            -> "Неизвестная ошибка"
         }
-        _state.update { it.copy(enterButtonState = EnterButtonState.None, error = AuthorizationError.Error(message = message)) }
+        navigator.navigateBack(NavigationIntent.NavigationBack())
     }
 
     init {
         viewModelScope.launch(Dispatchers.IO + handler) {
-            _state.update { it.copy(enterButtonState = EnterButtonState.Loading) }
-            signInUseCase.signInByToken()
-            _state.update { it.copy(enterButtonState = EnterButtonState.None) }
-            delay(500L)
-            navigator.navigateTo(
-                NavigationIntent.NavigationTo(
-                    route = TABS_ROUTE,
-                    popUpToRoute = AUTH_NAV_ROUTE,
-                    inclusive = true
-                )
-            )
+            try {
+                val user = loadUserInfoUseCase()
+                _state.update { it.copy(userInfoState = UserInfoState.Loaded(user = user)) }
+            } catch (e: Exception) {
+                signOutUseCase()
+                throw e
+            }
         }
     }
 
-    fun singIn() {
-        val (login, password) = state.value
+    fun logout() {
         viewModelScope.launch(Dispatchers.IO + handler) {
-            _state.update { it.copy(enterButtonState = EnterButtonState.Loading) }
-            signInUseCase.signIn(login, password)
-            _state.update { it.copy(enterButtonState = EnterButtonState.None) }
+            signOutUseCase()
+            delay(500)
             navigator.navigateTo(
                 NavigationIntent.NavigationTo(
-                    route = TABS_ROUTE,
-                    popUpToRoute = AUTH_NAV_ROUTE,
+                    route = AUTH_NAV_ROUTE,
+                    popUpToRoute = TABS_ROUTE,
                     inclusive = true
                 )
             )
         }
     }
-
-    fun onLoginChanged(login: String) = _state.update { it.copy(login = login) }
-
-    fun onPasswordChanged(password: String) = _state.update { it.copy(password = password) }
 }
