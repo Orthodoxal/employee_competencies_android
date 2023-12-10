@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import `is`.ulstu.myapplication.authorization.presentation.AUTH_NAV_ROUTE
+import `is`.ulstu.myapplication.features.authorization.presentation.AUTH_NAV_ROUTE
 import `is`.ulstu.myapplication.ui.navigation.NavigationIntent
 import `is`.ulstu.myapplication.ui.navigation.Navigator
 import `is`.ulstu.myapplication.ui.navigation.mainNavGraphBuilder

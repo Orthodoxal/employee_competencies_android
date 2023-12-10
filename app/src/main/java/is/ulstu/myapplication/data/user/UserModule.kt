@@ -8,7 +8,7 @@ import `is`.ulstu.myapplication.data.user.sources.api.UserSource
 import `is`.ulstu.myapplication.data.user.sources.api.RetrofitUserSource
 import `is`.ulstu.myapplication.data.user.sources.cache.SharedPreferencesInfoUserCache
 import `is`.ulstu.myapplication.data.user.sources.cache.UserInfoCache
-import `is`.ulstu.myapplication.authorization.domain.AuthorizationRepository
+import `is`.ulstu.myapplication.features.authorization.domain.AuthorizationRepository
 
 @Module
 @InstallIn(SingletonComponent::class)

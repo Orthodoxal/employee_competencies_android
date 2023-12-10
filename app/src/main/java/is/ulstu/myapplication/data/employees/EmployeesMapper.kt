@@ -8,10 +8,10 @@ import `is`.ulstu.myapplication.data.employees.sources.cache.entities.EmployeeEn
 import `is`.ulstu.myapplication.data.employees.sources.cache.entities.EmployeeRateEntity
 import `is`.ulstu.myapplication.data.employees.sources.cache.entities.RateEntity
 import `is`.ulstu.myapplication.data.employees.sources.cache.entities.RatedValueEntity
-import `is`.ulstu.myapplication.employees.domain.models.EmployeeModel
-import `is`.ulstu.myapplication.employees.domain.models.EmployeeRateModel
-import `is`.ulstu.myapplication.employees.domain.models.RateModel
-import `is`.ulstu.myapplication.employees.domain.models.RatedValueModel
+import `is`.ulstu.myapplication.features.employees.domain.models.EmployeeModel
+import `is`.ulstu.myapplication.features.employees.domain.models.EmployeeRateModel
+import `is`.ulstu.myapplication.features.employees.domain.models.RateModel
+import `is`.ulstu.myapplication.features.employees.domain.models.RatedValueModel
 import javax.inject.Inject
 import javax.inject.Singleton
 

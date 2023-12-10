@@ -15,6 +15,9 @@ interface EmployeesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setEmployeesCatalog(employeesCatalog: List<EmployeeEntity>)
 
+    @Query("SELECT * FROM employees_catalog WHERE id = :employeeId")
+    suspend fun getEmployeeById(employeeId: Long): EmployeeEntity
+
     @Query("SELECT * FROM employees_catalog WHERE fullName LIKE :fullName")
     suspend fun findEmployeeByName(fullName: String): List<EmployeeEntity>
 }
