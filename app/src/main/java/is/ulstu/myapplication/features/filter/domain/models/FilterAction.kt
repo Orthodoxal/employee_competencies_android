@@ -5,41 +5,88 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import java.math.BigDecimal
 
 sealed interface FilterAction {
+    val label: String
+
     fun filter(source: Sequence<EmployeeModel>): Sequence<EmployeeModel>
 }
 
-data class SalaryFilter(val from: BigDecimal, val to: BigDecimal) : FilterAction {
-    override fun filter(source: Sequence<EmployeeModel>) = source.filter { it.salary in from..to }
+interface RangeFilterType {
+    val rangeValues: ClosedFloatingPointRange<Float>
+
+    companion object {
+        val DEFAULT = 0f..1f
+    }
 }
 
-data class SeniorityFilter(val from: Int, val to: Int) : FilterAction {
-    override fun filter(source: Sequence<EmployeeModel>) = source.filter { it.seniority in from..to }
+interface ListFilterType<T> {
+    val values: List<T>
+
+    companion object {
+        fun <T> default() = emptyList<T>()
+    }
 }
 
-data class AgeFilter(val from: Int, val to: Int) : FilterAction {
+data class SalaryFilter(
+    val range: ClosedFloatingPointRange<Float>,
+    override val label: String = "Заработная плата",
+    override val rangeValues: ClosedFloatingPointRange<Float> = RangeFilterType.DEFAULT,
+) : FilterAction, RangeFilterType {
+
+    override fun filter(source: Sequence<EmployeeModel>) = source.filter { it.salary.toFloat() in range }
+}
+
+data class SeniorityFilter(
+    val range: IntRange,
+    override val label: String = "Стаж в компании",
+    override val rangeValues: ClosedFloatingPointRange<Float> = RangeFilterType.DEFAULT,
+) : FilterAction, RangeFilterType {
+
+    override fun filter(source: Sequence<EmployeeModel>) = source.filter { it.seniority in range }
+}
+
+data class AgeFilter(
+    val range: IntRange,
+    override val label: String = "Возраст",
+    override val rangeValues: ClosedFloatingPointRange<Float> = RangeFilterType.DEFAULT,
+) : FilterAction, RangeFilterType {
+
     override fun filter(source: Sequence<EmployeeModel>): Sequence<EmployeeModel> {
         val currentMoment: Instant = Clock.System.now()
         val currentDate = currentMoment.toLocalDateTime(TimeZone.UTC).date
         return source.filter {
-            it.birthDate.year in (currentDate.year - to)..(currentDate.year - from)
+            it.birthDate.year in (currentDate.year - range.last)..(currentDate.year - range.first)
         }
     }
 }
 
-data class DepartmentFilter(val departments: List<String>) : FilterAction {
+data class DepartmentFilter(
+    val departments: List<String>,
+    override val label: String = "Отдел",
+    override val values: List<String> = ListFilterType.default(),
+) : FilterAction, ListFilterType<String> {
+
     override fun filter(source: Sequence<EmployeeModel>) =
         source.filter { departments.contains(it.department) }
 }
 
-data class PositionFilter(val positions: List<String>) : FilterAction {
+data class PositionFilter(
+    val positions: List<String>,
+    override val label: String = "Должность",
+    override val values: List<String> = ListFilterType.default(),
+) : FilterAction, ListFilterType<String> {
+
     override fun filter(source: Sequence<EmployeeModel>) =
         source.filter { positions.contains(it.position) }
 }
 
-data class TechsFilter(val techs: List<String>) : FilterAction {
+data class TechsFilter(
+    val techs: List<String>,
+    override val label: String = "Технологии",
+    override val values: List<String> = ListFilterType.default(),
+) : FilterAction, ListFilterType<String> {
+
     override fun filter(source: Sequence<EmployeeModel>) =
         source.filter { employeeModel -> employeeModel.techs.any { techs.contains(it) } }
 }

@@ -24,39 +24,53 @@ class LoadInitialFilterValuesUseCase @Inject constructor(
     suspend operator fun invoke(): List<FilterAction> {
         val catalog = employeesRepository.getEmployeesCatalogFromCache().asSequence()
         return buildList {
+            val salary = catalog.minOf { it.salary }.toFloat()..catalog.maxOf { it.salary }.toFloat()
             add(
                 SalaryFilter(
-                    from = catalog.minOf { it.salary },
-                    to = catalog.maxOf { it.salary },
+                    range = salary,
+                    rangeValues = salary,
                 )
             )
+
+            val seniority = catalog.minOf { it.seniority }..catalog.maxOf { it.seniority }
             add(
                 SeniorityFilter(
-                    from = catalog.minOf { it.seniority },
-                    to = catalog.maxOf { it.seniority },
+                    range = seniority,
+                    rangeValues = seniority.first.toFloat()..seniority.last.toFloat(),
                 )
             )
+
             val currentMoment: Instant = Clock.System.now()
             val currentDate = currentMoment.toLocalDateTime(TimeZone.UTC).date
+            val age = catalog
+                .minOf { (currentDate - it.birthDate).years }..catalog
+                .maxOf { (currentDate - it.birthDate).years }
             add(
                 AgeFilter(
-                    from = catalog.minOf { (currentDate - it.birthDate).years },
-                    to = catalog.maxOf { (currentDate - it.birthDate).years },
+                    range = age,
+                    rangeValues = age.first.toFloat()..age.last.toFloat(),
                 )
             )
+            val departments = catalog.map { it.department }.distinct().toList()
             add(
                 DepartmentFilter(
-                    departments = catalog.map { it.department }.distinct().toList()
+                    departments = departments,
+                    values = departments,
                 )
             )
+            val positions = catalog.map { it.position }.distinct().toList()
             add(
                 PositionFilter(
-                    positions = catalog.map { it.position }.distinct().toList()
+                    positions = positions,
+                    values = positions,
                 )
             )
+
+            val techs = catalog.flatMap { it.techs.asSequence() }.distinct().toList()
             add(
                 TechsFilter(
-                    techs = catalog.flatMap { it.techs.asSequence() }.distinct().toList()
+                    techs = techs,
+                    values = techs,
                 )
             )
         }

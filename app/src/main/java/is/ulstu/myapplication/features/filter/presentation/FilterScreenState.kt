@@ -8,4 +8,10 @@ import `is`.ulstu.myapplication.features.filter.domain.models.FilterAction
 data class FilterScreenState(
     val filteredCatalog: List<EmployeeModel> = emptyList(),
     val filterActions: List<FilterAction> = emptyList(),
+    val filterConfigState: FilterConfigState = FilterConfigState.None,
 )
+
+sealed interface FilterConfigState {
+    object None : FilterConfigState
+    object Show : FilterConfigState
+}
