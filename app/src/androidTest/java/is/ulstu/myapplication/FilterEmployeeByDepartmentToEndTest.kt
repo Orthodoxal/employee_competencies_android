@@ -21,7 +21,7 @@ import org.junit.Test
 
 @HiltAndroidTest
 @UninstallModules(CacheModule::class)
-class FilterEmployeeByDepartmentToEndTest {
+class FilterEmployeeByPositionEndToEndTest {
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 
@@ -102,25 +102,6 @@ class FilterEmployeeByDepartmentToEndTest {
 
         runBlocking { composeRule.awaitIdle() }
         runBlocking { delay(2000) }
-
-        /*runBlocking { composeRule.awaitIdle() }
-
-        composeRule
-            .onAllNodesWithText("Петров Петр ", substring = true)
-            .assertCountEquals(1)
-            .onFirst()
-            .assertExists()
-            .performClick()
-
-        runBlocking { composeRule.awaitIdle() }
-
-        runBlocking { composeRule.awaitIdle() }
-
-        composeRule
-            .onNodeWithText("В компании:", substring = true)
-            .assertExists()
-
-        runBlocking { composeRule.awaitIdle() }*/
     }
 
     @After
