@@ -1,6 +1,5 @@
 package `is`.ulstu.myapplication
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -23,6 +23,8 @@ import `is`.ulstu.myapplication.ui.navigation.Navigator
 import `is`.ulstu.myapplication.ui.navigation.mainNavGraphBuilder
 import `is`.ulstu.myapplication.ui.theme.EmployeeCompetenciesAndroidTheme
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,11 +53,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NavigationEffects(navigationFlow: SharedFlow<NavigationIntent>, navHostController: NavHostController) {
-    val activity = (LocalContext.current as? Activity)
+    val activity = (LocalContext.current as? MainActivity)
     LaunchedEffect(activity, navHostController, navigationFlow) {
-        navigationFlow.collect { intent ->
+        navigationFlow.onEach { intent ->
             if (activity?.isFinishing == true) {
-                return@collect
+                return@onEach
             }
             when (intent) {
                 is NavigationIntent.NavigationBack -> {
@@ -77,7 +79,7 @@ fun NavigationEffects(navigationFlow: SharedFlow<NavigationIntent>, navHostContr
                     }
                 }
             }
-        }
+        }.launchIn(activity?.lifecycleScope!!)
     }
 }
 

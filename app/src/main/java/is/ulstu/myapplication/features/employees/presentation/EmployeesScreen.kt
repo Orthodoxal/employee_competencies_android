@@ -61,7 +61,7 @@ internal fun EmployeesScreen(model: EmployeesViewModel = hiltViewModel()) {
                 onValueChange = model::onSearchTextChange,
                 placeholder = {
                     Text(
-                        text = "Введите ФИО соотрудника",
+                        text = "Введите ФИО сотрудника",
                         style = Typography.titleMedium,
                         color = MaterialTheme.colorScheme.secondary,
                     )

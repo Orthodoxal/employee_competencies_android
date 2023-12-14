@@ -329,7 +329,7 @@ private fun DepartmentFilter(filter: DepartmentFilter, onFilterChange: (FilterAc
     )
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("Выберите значение") }
+    var selectedText by remember { mutableStateOf("Выберите отдел") }
     ExposedDropdownMenuBox(
         modifier = Modifier
             .padding(horizontal = 20.dp, vertical = 4.dp)
@@ -379,7 +379,7 @@ private fun PositionFilter(filter: PositionFilter, onFilterChange: (FilterAction
     )
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("Выберите значение") }
+    var selectedText by remember { mutableStateOf("Выберите должность") }
     ExposedDropdownMenuBox(
         modifier = Modifier
             .padding(horizontal = 20.dp, vertical = 4.dp)
@@ -429,7 +429,7 @@ private fun TechsFilter(filter: TechsFilter, onFilterChange: (FilterAction) -> U
     )
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("Выберите значение") }
+    var selectedText by remember { mutableStateOf("Выберите технологию") }
     ExposedDropdownMenuBox(
         modifier = Modifier
             .padding(horizontal = 20.dp, vertical = 4.dp)
