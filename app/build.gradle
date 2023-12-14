@@ -17,7 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "is.ulstu.myapplication.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -62,12 +62,6 @@ dependencies {
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
     implementation "androidx.compose.material:material:1.5.4"
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -81,20 +75,14 @@ dependencies {
     testImplementation "junit:junit:4.13.2"
     testImplementation "androidx.arch.core:core-testing:2.2.0"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
-    testImplementation "com.google.truth:truth:1.1.3"
-    testImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
-    testImplementation "io.mockk:mockk:1.12.0"
 
     // Instrumentation tests
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.37'
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.37'
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
     androidTestImplementation "junit:junit:4.13.2"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
     androidTestImplementation "androidx.arch.core:core-testing:2.2.0"
-    androidTestImplementation "com.google.truth:truth:1.1.3"
     androidTestImplementation 'androidx.test:core-ktx:1.5.0'
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
-    androidTestImplementation "io.mockk:mockk-android:1.12.0"
     androidTestImplementation 'androidx.test:runner:1.5.2'
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2"
